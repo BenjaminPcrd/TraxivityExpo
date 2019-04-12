@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Expo from 'expo'
-import { StackNavigator } from 'react-navigation';
+import { StackNavigator, NavigationActions } from 'react-navigation';
 import {
   Container,
   Content,
@@ -11,24 +11,28 @@ import {
   Tabs,
   Button
 } from "native-base";
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet } from 'react-native';
 import DayPodometer from './DayPodometer';
 
 class Podometer extends Component {
   static navigationOptions = ({ navigation }) => {
-    return {
-      headerTitle: "Traxivity",
-      headerLeft: (
-        <Button transparent onPress={() => navigation.getParam('openDrawer')}>
+      return {
+        headerTitle: "Traxivity",
+        headerLeft: (
+          <Button transparent onPress={navigation.getParam('openDrawer')}>
             <Icon name="menu" />
-        </Button>
-      ),
+          </Button>
+        ),
+      };
     };
-  };
 
-  componentDidMount() {
-    this.props.navigation.setParams({ increaseCount: this.props.navigation.openDrawer() });
-  }
+    componentDidMount() {
+      this.props.navigation.setParams({ openDrawer: this._openDrawer });
+    }
+
+    _openDrawer = () => {
+      this.props.navigation.openDrawer()
+    };
 
   render() {
     return (
@@ -38,10 +42,12 @@ class Podometer extends Component {
             <DayPodometer/>
           </Tab>
           <Tab heading="Week">
-            <Text>tab2</Text>
+          <Button transparent onPress={() => this.props.navigation.openDrawer()}>
+              <Text>Week tab</Text>
+          </Button>
           </Tab>
           <Tab heading="Messages">
-            <Text>tab3</Text>
+            <Text>Messages tab</Text>
           </Tab>
         </Tabs>
       </Container>
