@@ -3,35 +3,36 @@ import Expo from 'expo'
 import { StackNavigator } from 'react-navigation';
 import {
   Container,
-  Header,
   Content,
-  Button,
   Icon,
-  Left,
-  Right,
-  Body,
   Text,
   Title,
   Tab,
-  Tabs
+  Tabs,
+  Button
 } from "native-base";
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import DayPodometer from './DayPodometer';
 
 class Podometer extends Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerTitle: "Traxivity",
+      headerLeft: (
+        <Button transparent onPress={() => navigation.getParam('openDrawer')}>
+            <Icon name="menu" />
+        </Button>
+      ),
+    };
+  };
+
+  componentDidMount() {
+    this.props.navigation.setParams({ increaseCount: this.props.navigation.openDrawer() });
+  }
+
   render() {
     return (
       <Container style={styles.container}>
-        <Header hasTabs>
-          <Left>
-            <Button transparent onPress={() => this.props.navigation.openDrawer()}>
-              <Icon name="menu" />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Podometer</Title>
-          </Body>
-        </Header>
         <Tabs>
           <Tab heading="Day">
             <DayPodometer/>
@@ -50,7 +51,6 @@ class Podometer extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 30
   }
 });
 
