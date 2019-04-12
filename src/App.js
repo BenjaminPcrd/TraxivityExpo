@@ -1,8 +1,8 @@
 import React from 'react';
-import Setup from './src/boot/Setup'
+import Navigation from './navigation/Navigation';
 
 export default class App extends React.Component {
   render() {
-    return <Setup />;
+    return <Navigation />;
   }
 }

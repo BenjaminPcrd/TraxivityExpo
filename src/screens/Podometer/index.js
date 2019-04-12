@@ -19,9 +19,6 @@ import { StyleSheet } from 'react-native';
 import DayPodometer from './DayPodometer';
 
 class Podometer extends Component {
-  static navigationOptions = {
-    title: 'Chat'
-  }
   render() {
     return (
       <Container style={styles.container}>
