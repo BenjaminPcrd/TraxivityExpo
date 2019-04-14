@@ -1,21 +1,21 @@
 import React, { Component } from "react";
-import Expo from 'expo'
-import { StackNavigator, NavigationActions } from 'react-navigation';
 import {
   Container,
-  Content,
+  Header,
+  Left,
+  Button,
   Icon,
-  Text,
+  Body,
   Title,
-  Tab,
   Tabs,
-  Button
+  Tab,
+  Text
 } from "native-base";
-import { StyleSheet } from 'react-native';
+import { StyleSheet, StatusBar } from 'react-native';
 import DayPodometer from './DayPodometer';
 
-class Podometer extends Component {
-  static navigationOptions = ({ navigation }) => {
+export default class Podometer extends Component {
+  /*static navigationOptions = ({ navigation }) => {
       return {
         headerTitle: "Traxivity",
         headerLeft: (
@@ -32,19 +32,30 @@ class Podometer extends Component {
 
     _openDrawer = () => {
       this.props.navigation.openDrawer()
-    };
+    };*/
 
   render() {
     return (
       <Container style={styles.container}>
+        <Header>
+          <Left>
+            <Button
+              transparent
+              onPress={() => this.props.navigation.openDrawer()}
+            >
+              <Icon name="ios-menu" />
+            </Button>
+          </Left>
+          <Body>
+             <Title>Podometer</Title>
+          </Body>
+        </Header>
         <Tabs>
           <Tab heading="Day">
             <DayPodometer/>
           </Tab>
           <Tab heading="Week">
-          <Button transparent onPress={() => this.props.navigation.openDrawer()}>
-              <Text>Week tab</Text>
-          </Button>
+          <Text>Week tab</Text>
           </Tab>
           <Tab heading="Messages">
             <Text>Messages tab</Text>
@@ -57,7 +68,6 @@ class Podometer extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: StatusBar.currentHeight
   }
 });
-
-export default Podometer
