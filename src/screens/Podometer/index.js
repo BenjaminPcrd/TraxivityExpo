@@ -13,6 +13,7 @@ import {
 } from "native-base";
 import { StyleSheet, StatusBar } from 'react-native';
 import DayPodometer from './DayPodometer';
+import WeekPodometer from './WeekPodometer';
 
 export default class Podometer extends Component {
   /*static navigationOptions = ({ navigation }) => {
@@ -52,10 +53,10 @@ export default class Podometer extends Component {
         </Header>
         <Tabs>
           <Tab heading="Day">
-            <DayPodometer/>
+            <DayPodometer />
           </Tab>
           <Tab heading="Week">
-          <Text>Week tab</Text>
+            <WeekPodometer />
           </Tab>
           <Tab heading="Messages">
             <Text>Messages tab</Text>

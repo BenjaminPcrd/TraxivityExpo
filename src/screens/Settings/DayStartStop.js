@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View, Button } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
 export default class DateTimePickerTester extends Component {
@@ -19,9 +19,7 @@ export default class DateTimePickerTester extends Component {
   render () {
     return (
       <View style={{ flex: 1 }}>
-        <TouchableOpacity onPress={this._showDateTimePicker}>
-          <Text>Show DatePicker</Text>
-        </TouchableOpacity>
+        <Button title="Show timePicker" onPress={this._showDateTimePicker}/>
         <DateTimePicker
           isVisible={this.state.isDateTimePickerVisible}
           onConfirm={this._handleDatePicked}

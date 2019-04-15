@@ -6,7 +6,7 @@ import { StyleSheet, Text, View, Button } from "react-native";
 export default class DayPodometer extends React.Component {
   state = {
     isPedometerAvailable: "checking",
-    pastStepCount: 0,
+    pastStepCount: 0
   };
 
   componentDidMount() {
@@ -31,9 +31,14 @@ export default class DayPodometer extends React.Component {
       }
     );
 
-    const end = new Date();
-    const start = new Date();
-    start.setDate(end.getDate() - 1);
+    var end = new Date();
+    var start
+    if((end.getMonth() + 1) >= 10) {
+      start = new Date(end.getFullYear() + "-" + (end.getMonth() + 1) + "-" + (end.getDate()));
+    } else {
+      start = new Date(end.getFullYear() + "-0" + (end.getMonth() + 1) + "-" + (end.getDate()));
+    }
+    console.log("start : " + start + "       end : " + end)
     Pedometer.getStepCountAsync(start, end).then(
       result => {
         this.setState({ pastStepCount: result.steps });
