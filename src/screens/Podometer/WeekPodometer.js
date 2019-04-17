@@ -1,10 +1,11 @@
 import Expo from "expo";
 import React from "react";
 import { Pedometer } from "expo";
-import { StyleSheet, Text, View, Button, FlatList } from "react-native";
+import { StyleSheet, Text, View, Button, FlatList, ActivityIndicator } from "react-native";
 
 export default class DayPodometer extends React.Component {
   state = {
+    isLoading: true,
     isPedometerAvailable: "checking",
     pastStepCount: {
       monday: 0,
@@ -26,7 +27,7 @@ export default class DayPodometer extends React.Component {
   }
 
   _subscribe = () => {
-    Pedometer.isAvailableAsync().then(
+    /*Pedometer.isAvailableAsync().then(
       result => {
         this.setState({
           isPedometerAvailable: String(result)
@@ -37,14 +38,15 @@ export default class DayPodometer extends React.Component {
           isPedometerAvailable: "Could not get isPedometerAvailable: " + error
         });
       }
-    );
+    );*/
 
+    //const today = new Date("2019-04-14T23:00:00")
     const today = new Date()
     var nbDays = today.getDay();
     if(nbDays == 0) nbDays = 7
-    console.log(nbDays)
 
     for(i = 0; i < nbDays; i++) {
+      //var end = new Date("2019-04-14T23:00:00")
       var end = new Date()
       var start
       if((end.getMonth() + 1) >= 10) {
@@ -56,19 +58,25 @@ export default class DayPodometer extends React.Component {
       start.setDate(start.getDate() - i)
       end.setDate(end.getDate() - i)
       this._getStepCount(start, end)
-      //console.log("start : " + start + "     end : " + end)
+      this.setState({
+        isLoading: false
+      })
+      /*console.log("start : ")
+      console.log(start)
+      console.log("end : ")
+      console.log(end)*/
     }
   };
 
-  async _getStepCount(start, end) {
+  _getStepCount(start, end) {
     var day = days[start.getDay()]
-    await Pedometer.getStepCountAsync(start, end).then(
+    Pedometer.getStepCountAsync(start, end).then(
       result => {
         this.setState({ pastStepCount: { ...this.state.pastStepCount, [day]: result.steps} });
         //console.log(result.steps)
       },
       error => {
-        this.setState({ pastStepCount: { ...this.state.pastStepCount, [day]: "Could not get stepCount: " + error} });
+        this.setState({ pastStepCount: { ...this.state.pastStepCount, [day]: "error: " + error} });
         //console.log("Could not get stepCount: " + error)
       }
     );
@@ -78,6 +86,16 @@ export default class DayPodometer extends React.Component {
     this._subscription && this._subscription.remove();
     this._subscription = null;
   };
+
+  _displayLoading() {
+    if(this.state.isLoading) {
+      return(
+        <View style={styles.loading_container}>
+          <ActivityIndicator size='large'/>
+        </View>
+      )
+    }
+  }
 
 /*<FlatList
   data={this.state.pastStepCount.monday}
@@ -95,6 +113,7 @@ export default class DayPodometer extends React.Component {
         <Text>Friday    {this.state.pastStepCount.friday}</Text>
         <Text>Saturday  {this.state.pastStepCount.saturday}</Text>
         <Text>Sunday    {this.state.pastStepCount.sunday}</Text>
+        {this._displayLoading()}
       </View>
     );
   }
@@ -106,6 +125,15 @@ const styles = StyleSheet.create({
     marginTop: 15,
     alignItems: "center",
     justifyContent: "center"
+  },
+  loading_container: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });
 
