@@ -1,13 +1,14 @@
 import React from 'react';
 import AppContainer from './navigation/AppContainer';
-import { Root } from 'native-base'
+import { Provider } from 'react-redux'
+import Store from './store/configureStore'
 
 export default class App extends React.Component {
   render() {
     return(
-      <Root>
+      <Provider store={Store}>
         <AppContainer />
-      </Root>
+      </Provider>
     );
   }
 }

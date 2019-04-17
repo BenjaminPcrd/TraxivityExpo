@@ -8,8 +8,10 @@ import {
   Icon
 } from "native-base";
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import { connect } from 'react-redux'
 
-export default class DateTimePickerTester extends Component {
+
+class DayStartStop extends Component {
   state = {
     isTimePickerStartVisible: false,
     isTimePickerEndVisible: false,
@@ -21,12 +23,16 @@ export default class DateTimePickerTester extends Component {
   _hideTimePickerEnd = () => this.setState({ isTimePickerEndVisible: false });
 
   _handlePickedStart = (date) => {
-    console.log('Start Time: ', date.getHours() + "h");
+    console.log('Start Time: ', date.getHours());
+    const action = { type: "SET_START_DAY_TIME", value: date.getHours() }
+    this.props.dispatch(action)
     this._hideTimePickerStart();
   };
 
   _handlePickedEnd = (date) => {
-    console.log('End Time: ', date.getHours() + "h");
+    console.log('End Time: ', date.getHours());
+    const action = { type: "SET_END_DAY_TIME", value: date.getHours() }
+    this.props.dispatch(action)
     this._hideTimePickerEnd();
   };
 
@@ -38,7 +44,7 @@ export default class DateTimePickerTester extends Component {
         </Text>
         <Button full onPress={this._showTimePickerStart}>
           <Icon name="clock" />
-          <Text>Start of day</Text>
+          <Text>Start of day: {this.props.startDayTime}h</Text>
         </Button>
         <DateTimePicker
           isVisible={this.state.isTimePickerStartVisible}
@@ -46,11 +52,12 @@ export default class DateTimePickerTester extends Component {
           onCancel={this._hideTimePickerStart}
           mode='time'
           is24Hour={false}
+          date={new Date('December 17, 1995 ' + this.props.startDayTime + ':00:00')}
         />
 
         <Button full onPress={this._showTimePickerEnd}>
           <Icon name="clock" />
-          <Text>End of day</Text>
+          <Text>End of day: {this.props.endDayTime}h</Text>
         </Button>
         <DateTimePicker
           isVisible={this.state.isTimePickerEndVisible}
@@ -58,6 +65,7 @@ export default class DateTimePickerTester extends Component {
           onCancel={this._hideTimePickerEnd}
           mode='time'
           is24Hour={false}
+          date={new Date('December 17, 1995 ' + this.props.endDayTime + ':00:00')}
         />
       </Container>
     );
@@ -72,3 +80,12 @@ const styles = StyleSheet.create({
     paddingRight: 30
   }
 });
+
+const mapStateToProps = (state) => {
+  return {
+    startDayTime: state.startDayTime,
+    endDayTime: state.endDayTime
+  }
+}
+
+export default connect(mapStateToProps)(DayStartStop)
