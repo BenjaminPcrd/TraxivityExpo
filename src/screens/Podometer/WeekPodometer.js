@@ -40,32 +40,27 @@ export default class DayPodometer extends React.Component {
       }
     );*/
 
-    //const today = new Date("2019-04-14T23:00:00")
     const today = new Date()
     var nbDays = today.getDay();
     if(nbDays == 0) nbDays = 7
+    const UTC_OFFSET = today.getTimezoneOffset()/60
+
+    var start = new Date()
+    var end = new Date()
+    start.setHours(0 - UTC_OFFSET)
+    start.setMinutes(0)
+    end.setHours(23 - UTC_OFFSET)
+    end.setMinutes(59)
 
     for(i = 0; i < nbDays; i++) {
-      //var end = new Date("2019-04-14T23:00:00")
-      var end = new Date()
-      var start
-      if((end.getMonth() + 1) >= 10) {
-        start = new Date(end.getFullYear() + "-" + (end.getMonth() + 1) + "-" + (end.getDate()));
-      } else {
-        start = new Date(end.getFullYear() + "-0" + (end.getMonth() + 1) + "-" + (end.getDate()));
-      }
-
-      start.setDate(start.getDate() - i)
-      end.setDate(end.getDate() - i)
       this._getStepCount(start, end)
-      this.setState({
-        isLoading: false
-      })
-      /*console.log("start : ")
-      console.log(start)
-      console.log("end : ")
-      console.log(end)*/
+      start.setDate(start.getDate() - 1)
+      end.setDate(end.getDate() - 1)
     }
+    this.setState({
+      isLoading: false
+    })
+
   };
 
   _getStepCount(start, end) {
