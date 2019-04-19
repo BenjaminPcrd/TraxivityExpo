@@ -31,22 +31,28 @@ export default class DayPodometer extends React.Component {
       }
     );
 
-    var end = new Date();
+    /*var end = new Date();
     var start
     if((end.getMonth() + 1) >= 10) {
       start = new Date(end.getFullYear() + "-" + (end.getMonth() + 1) + "-" + (end.getDate()));
     } else {
       start = new Date(end.getFullYear() + "-0" + (end.getMonth() + 1) + "-" + (end.getDate()));
     }
-    console.log("start : " + start + "       end : " + end)
+    console.log("start : " + start + "       end : " + end)*/
+
+    var start = new Date()
+    var end = new Date()
+    const UTC_OFFSET = start.getTimezoneOffset()/60
+    start.setHours(0 - UTC_OFFSET)
+    start.setMinutes(0)
+    end.setHours(23 - UTC_OFFSET)
+    end.setMinutes(59)
     Pedometer.getStepCountAsync(start, end).then(
       result => {
         this.setState({ pastStepCount: result.steps });
       },
       error => {
-        this.setState({
-          pastStepCount: "Could not get stepCount: " + error
-        });
+        this.setState({ pastStepCount: "Could not get stepCount: " + error });
       }
     );
   };

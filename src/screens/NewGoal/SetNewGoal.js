@@ -18,7 +18,7 @@ class SetNewGoal extends Component {
         </Text>
         <ScrollPicker
           dataSource={stepsTab}
-          selectedIndex={1}
+          selectedIndex={stepsTab.indexOf((this.props.goal).toString())}
           renderItem={(data, index, isSelected) => {
               //
           }}
@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return {
+    goal: state.setNewGoal.goal
   }
 }
 

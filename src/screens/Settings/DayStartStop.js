@@ -83,8 +83,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return {
-    startDayTime: state.startDayTime,
-    endDayTime: state.endDayTime
+    startDayTime: state.setStartEndDayTime.startDayTime,
+    endDayTime: state.setStartEndDayTime.endDayTime
   }
 }
 
