@@ -43,7 +43,7 @@ class DayStartStop extends Component {
           Select time below for the start and end of your day for sending you messages. Messages will not be sent outside of these hours.
         </Text>
         <Button full onPress={this._showTimePickerStart}>
-          <Icon name="clock" />
+          <Icon name="time" />
           <Text>Start of day: {this.props.startDayTime}h</Text>
         </Button>
         <DateTimePicker
@@ -56,7 +56,7 @@ class DayStartStop extends Component {
         />
 
         <Button full onPress={this._showTimePickerEnd}>
-          <Icon name="clock" />
+          <Icon name="time" />
           <Text>End of day: {this.props.endDayTime}h</Text>
         </Button>
         <DateTimePicker

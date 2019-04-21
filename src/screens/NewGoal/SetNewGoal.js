@@ -8,7 +8,6 @@ import {
 } from "native-base";
 import { connect } from 'react-redux'
 
-
 class SetNewGoal extends Component {
   render () {
     return (
@@ -23,7 +22,8 @@ class SetNewGoal extends Component {
               //
           }}
           onValueChange={(data, selectedIndex) => {
-              //
+            const action = { type: "SET_NEW_GOAL", value: data }
+            this.props.dispatch(action)
           }}
           wrapperHeight={180}
           wrapperWidth={150}
@@ -34,9 +34,6 @@ class SetNewGoal extends Component {
           activeItemColor={'#222121'}
           itemColor={'#B4B4B4'}
         />
-        <Button onPress={console.log("button")}>
-          <Text>OK</Text>
-        </Button>
       </View>
     );
   }

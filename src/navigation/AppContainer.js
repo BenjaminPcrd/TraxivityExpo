@@ -1,8 +1,9 @@
 import { createAppContainer, createStackNavigator, createDrawerNavigator } from 'react-navigation'
+import React from "react";
 import Podometer from '../screens/Podometer'
 import Settings from '../screens/Settings'
 import NewGoal from '../screens/NewGoal'
-import { Text } from 'react-native';
+import SideBar from "../screens/SideBar";
 
 const Drawer = createDrawerNavigator(
   {
@@ -15,6 +16,10 @@ const Drawer = createDrawerNavigator(
     Settings: {
       screen: Settings
     }
+  },
+  {
+    initialRouteName: "Podometer",
+    contentComponent: props => <SideBar {...props} />
   }
 );
 

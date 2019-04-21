@@ -1,6 +1,6 @@
 
 const initialState = {
-  goal: 3500,
+  goal: 4000,
 }
 
 function setNewGoal(state = initialState, action) {

@@ -2,8 +2,10 @@ import Expo from "expo";
 import React from "react";
 import { Pedometer } from "expo";
 import { StyleSheet, Text, View, Button } from "react-native";
+import { connect } from 'react-redux';
+import StepProgress from './StepProgress'
 
-export default class DayPodometer extends React.Component {
+class DayPodometer extends React.Component {
   state = {
     isPedometerAvailable: "checking",
     pastStepCount: 0
@@ -31,15 +33,6 @@ export default class DayPodometer extends React.Component {
       }
     );
 
-    /*var end = new Date();
-    var start
-    if((end.getMonth() + 1) >= 10) {
-      start = new Date(end.getFullYear() + "-" + (end.getMonth() + 1) + "-" + (end.getDate()));
-    } else {
-      start = new Date(end.getFullYear() + "-0" + (end.getMonth() + 1) + "-" + (end.getDate()));
-    }
-    console.log("start : " + start + "       end : " + end)*/
-
     var start = new Date()
     var end = new Date()
     const UTC_OFFSET = start.getTimezoneOffset()/60
@@ -61,12 +54,11 @@ export default class DayPodometer extends React.Component {
     this._subscription && this._subscription.remove();
     this._subscription = null;
   };
-
+/*<Text>Steps taken in the last 24 hours: {this.state.pastStepCount}</Text>
+<Text>Goal: {this.props.goal}</Text>*/
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Steps taken in the last 24 hours: {this.state.pastStepCount}</Text>
-      </View>
+      <StepProgress progress={this.state.pastStepCount} goal={this.props.goal} />
     );
   }
 }
@@ -79,3 +71,11 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   }
 });
+
+const mapStateToProps = (state) => {
+  return {
+    goal: state.setNewGoal.goal
+  }
+}
+
+export default connect(mapStateToProps)(DayPodometer)
