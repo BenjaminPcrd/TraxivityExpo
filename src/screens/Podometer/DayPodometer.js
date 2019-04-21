@@ -3,7 +3,7 @@ import React from "react";
 import { Pedometer } from "expo";
 import { StyleSheet, Text, View, Button } from "react-native";
 import { connect } from 'react-redux';
-import StepProgress from './StepProgress'
+import DayStepProgress from './DayStepProgress'
 
 class DayPodometer extends React.Component {
   state = {
@@ -58,7 +58,7 @@ class DayPodometer extends React.Component {
 <Text>Goal: {this.props.goal}</Text>*/
   render() {
     return (
-      <StepProgress progress={this.state.pastStepCount} goal={this.props.goal} />
+      <DayStepProgress progress={this.state.pastStepCount} goal={this.props.goal} />
     );
   }
 }

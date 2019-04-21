@@ -1,10 +1,13 @@
 import React from 'react'
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+import {
+  Icon,
+  Text
+} from "native-base";
 import { ProgressCircle } from 'react-native-svg-charts'
 
-export default class StepProgress extends React.PureComponent {
+export default class DayStepProgress extends React.PureComponent {
   render() {
-    console.log(this.props)
     return (
       <View style={styles.container}>
         <ProgressCircle
@@ -17,6 +20,10 @@ export default class StepProgress extends React.PureComponent {
             <Text>{((this.props.progress/this.props.goal) * 100).toFixed(0)}% of goal</Text>
           </View>
         </ProgressCircle>
+        <View style={styles.textContainer}>
+          <Text dark>Your daily goal:</Text>
+          <Text>{this.props.goal} steps</Text>
+        </View>
       </View>
     )
   }
@@ -33,6 +40,6 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   }
 });

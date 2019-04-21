@@ -2,21 +2,24 @@ import Expo from "expo";
 import React from "react";
 import { Pedometer } from "expo";
 import { StyleSheet, Text, View, Button, FlatList, ActivityIndicator } from "react-native";
+import WeekStepProgress from './WeekStepProgress'
 
 export default class DayPodometer extends React.Component {
-  state = {
-    isLoading: true,
-    isPedometerAvailable: "checking",
-    pastStepCount: {
-      monday: 0,
-      tuesday: 0,
-      wednesday: 0,
-      thursday: 0,
-      friday: 0,
-      saturday: 0,
-      sunday: 0
-    }
-  };
+  constructor(props) {
+    super(props)
+    this.state = {
+      pastStepCount: {
+        monday: 0,
+        tuesday: 0,
+        wednesday: 0,
+        thursday: 0,
+        friday: 0,
+        saturday: 0,
+        sunday: 0
+      }
+    };
+    this._preState = this.state.pastStepCount
+  }
 
   componentDidMount() {
     this._subscribe();
@@ -26,20 +29,7 @@ export default class DayPodometer extends React.Component {
     this._unsubscribe();
   }
 
-  _subscribe = () => {
-    /*Pedometer.isAvailableAsync().then(
-      result => {
-        this.setState({
-          isPedometerAvailable: String(result)
-        });
-      },
-      error => {
-        this.setState({
-          isPedometerAvailable: "Could not get isPedometerAvailable: " + error
-        });
-      }
-    );*/
-
+  async _subscribe() {
     const today = new Date()
     var nbDays = today.getDay();
     if(nbDays == 0) nbDays = 7
@@ -53,26 +43,22 @@ export default class DayPodometer extends React.Component {
     end.setMinutes(59)
 
     for(i = 0; i < nbDays; i++) {
-      this._getStepCount(start, end)
+      await this._getStepCount(start, end)
       start.setDate(start.getDate() - 1)
       end.setDate(end.getDate() - 1)
     }
-    this.setState({
-      isLoading: false
-    })
-
+    this.setState({ pastStepCount: this._preState });
   };
 
-  _getStepCount(start, end) {
+
+  async _getStepCount(start, end) {
     var day = days[start.getDay()]
-    Pedometer.getStepCountAsync(start, end).then(
+    await Pedometer.getStepCountAsync(start, end).then(
       result => {
-        this.setState({ pastStepCount: { ...this.state.pastStepCount, [day]: result.steps} });
-        //console.log(result.steps)
+        this._preState = {...this._preState, [day]: result.steps}
       },
       error => {
-        this.setState({ pastStepCount: { ...this.state.pastStepCount, [day]: "error: " + error} });
-        //console.log("Could not get stepCount: " + error)
+        this._preState = {...this._preState, [day]: "error: " + error}
       }
     );
   }
@@ -82,34 +68,9 @@ export default class DayPodometer extends React.Component {
     this._subscription = null;
   };
 
-  _displayLoading() {
-    if(this.state.isLoading) {
-      return(
-        <View style={styles.loading_container}>
-          <ActivityIndicator size='large'/>
-        </View>
-      )
-    }
-  }
-
-/*<FlatList
-  data={this.state.pastStepCount.monday}
-  keyExtractor={(item) => Math.floor(Math.random() * Math.floor(999999)).toString()}
-  renderItem={({item}) => <Text>{item}</Text>}
-/>*/
   render() {
-    //console.log(this.state)
     return (
-      <View style={styles.container}>
-        <Text>Monday    {this.state.pastStepCount.monday}</Text>
-        <Text>Tuesday   {this.state.pastStepCount.tuesday}</Text>
-        <Text>Wednesday {this.state.pastStepCount.wednesday}</Text>
-        <Text>Thursday  {this.state.pastStepCount.thursday}</Text>
-        <Text>Friday    {this.state.pastStepCount.friday}</Text>
-        <Text>Saturday  {this.state.pastStepCount.saturday}</Text>
-        <Text>Sunday    {this.state.pastStepCount.sunday}</Text>
-        {this._displayLoading()}
-      </View>
+      <WeekStepProgress pastWeek={this.state.pastStepCount}/>
     );
   }
 }

@@ -7,5 +7,4 @@ const reducers = combineReducers({
   setNewGoal
 })
 const store = createStore(reducers)
-console.log(store.getState())
 export default store
