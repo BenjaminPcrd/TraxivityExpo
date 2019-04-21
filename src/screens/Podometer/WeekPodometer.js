@@ -8,6 +8,7 @@ export default class DayPodometer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      loading: true,
       pastStepCount: {
         monday: 0,
         tuesday: 0,
@@ -47,7 +48,7 @@ export default class DayPodometer extends React.Component {
       start.setDate(start.getDate() - 1)
       end.setDate(end.getDate() - 1)
     }
-    this.setState({ pastStepCount: this._preState });
+    this.setState({ pastStepCount: this._preState, loading: false });
   };
 
 
@@ -69,6 +70,9 @@ export default class DayPodometer extends React.Component {
   };
 
   render() {
+    if(this.state.loading) {
+      return (<View><ActivityIndicator size='large' style={{marginTop: 20}}/></View>)
+    }
     return (
       <WeekStepProgress pastWeek={this.state.pastStepCount}/>
     );

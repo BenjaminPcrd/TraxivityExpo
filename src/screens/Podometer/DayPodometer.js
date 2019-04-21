@@ -1,13 +1,13 @@
 import Expo from "expo";
 import React from "react";
 import { Pedometer } from "expo";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View, Button, ActivityIndicator } from "react-native";
 import { connect } from 'react-redux';
 import DayStepProgress from './DayStepProgress'
 
 class DayPodometer extends React.Component {
   state = {
-    isPedometerAvailable: "checking",
+    loading: true,
     pastStepCount: 0
   };
 
@@ -19,20 +19,7 @@ class DayPodometer extends React.Component {
     this._unsubscribe();
   }
 
-  _subscribe = () => {
-    Pedometer.isAvailableAsync().then(
-      result => {
-        this.setState({
-          isPedometerAvailable: String(result)
-        });
-      },
-      error => {
-        this.setState({
-          isPedometerAvailable: "Could not get isPedometerAvailable: " + error
-        });
-      }
-    );
-
+  async _subscribe() {
     var start = new Date()
     var end = new Date()
     const UTC_OFFSET = start.getTimezoneOffset()/60
@@ -40,23 +27,26 @@ class DayPodometer extends React.Component {
     start.setMinutes(0)
     end.setHours(23 - UTC_OFFSET)
     end.setMinutes(59)
-    Pedometer.getStepCountAsync(start, end).then(
+    await Pedometer.getStepCountAsync(start, end).then(
       result => {
-        this.setState({ pastStepCount: result.steps });
+        this.setState({ pastStepCount: result.steps, loading: false });
       },
       error => {
         this.setState({ pastStepCount: "Could not get stepCount: " + error });
       }
     );
+
   };
 
   _unsubscribe = () => {
     this._subscription && this._subscription.remove();
     this._subscription = null;
   };
-/*<Text>Steps taken in the last 24 hours: {this.state.pastStepCount}</Text>
-<Text>Goal: {this.props.goal}</Text>*/
+  
   render() {
+    if(this.state.loading) {
+      return (<View><ActivityIndicator size='large' style={{marginTop: 20}}/></View>)
+    }
     return (
       <DayStepProgress progress={this.state.pastStepCount} goal={this.props.goal} />
     );
