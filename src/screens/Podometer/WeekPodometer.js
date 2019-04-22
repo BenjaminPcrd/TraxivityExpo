@@ -31,12 +31,15 @@ export default class DayPodometer extends React.Component {
   }
 
   async _subscribe() {
+    //const today = new Date('2019-04-21T19:24:00')
     const today = new Date()
     var nbDays = today.getDay();
     if(nbDays == 0) nbDays = 7
     const UTC_OFFSET = today.getTimezoneOffset()/60
 
+    //var start = new Date('2019-04-21T19:24:00')
     var start = new Date()
+    //var end = new Date('2019-04-21T19:24:00')
     var end = new Date()
     start.setHours(0 - UTC_OFFSET)
     start.setMinutes(0)
