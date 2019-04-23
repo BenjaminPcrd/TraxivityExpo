@@ -20,8 +20,8 @@ export default class WeekStepProgress extends React.PureComponent {
           key={ index }
           x={ value >= CUT_OFF ? x(value) - 50 : x(value) + 5 }
           y={ y(index) + (bandwidth / 2) }
-          fontSize={ 14 }
-          fill={ value >= CUT_OFF ? 'white' : 'black' }
+          fontSize={ 10 }
+          fill={ value >= CUT_OFF ? 'white' : 'grey' }
           alignmentBaseline={ 'middle' }
         >
         {value}
@@ -29,7 +29,7 @@ export default class WeekStepProgress extends React.PureComponent {
       ))
     )
     return (
-      <View style={{ height: 400, padding: 20, flexDirection: 'row' }}>
+      <View style={{ height: 300, padding: 20, flexDirection: 'row' }}>
         <YAxis
           data={data}
           yAccessor={({ index }) => index}
@@ -51,7 +51,6 @@ export default class WeekStepProgress extends React.PureComponent {
             gridMin={0}
 
           >
-            <Grid direction={Grid.Direction.VERTICAL} yMin={1000}/>
             <Labels/>
           </BarChart>
         </View>

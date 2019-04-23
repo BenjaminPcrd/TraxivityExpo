@@ -25,22 +25,26 @@ export default class DayStepProgress extends React.PureComponent {
      ))
     )
     return (
-      <View style={styles.container}>
-        <ProgressCircle
-          style={styles.circle}
-          progress={ this.props.progress/this.props.goal }
-          progressColor={'rgb(134, 65, 244)'}
-        >
-          <View style={styles.textContainer}>
-            <Text>{this.props.progress} steps</Text>
-            <Text>{((this.props.progress/this.props.goal) * 100).toFixed(0)}% of goal</Text>
-          </View>
-        </ProgressCircle>
-        <View style={styles.textContainer}>
-          <Text dark>Your daily goal:</Text>
-          <Text>{this.props.goal} steps</Text>
+      <View style={styles.mainContainer}>
+        <View style={styles.circleContainer}>
+          <ProgressCircle
+            style={{flex: 1, marginTop: 20, marginBottom: 10}}
+            progress={ this.props.progress/this.props.goal }
+            progressColor={'rgb(134, 65, 244)'}
+          >
+            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+              <Text style={{fontSize: 20}}>{this.props.progress} steps</Text>
+              <Text style={{fontSize: 15}}>{((this.props.progress/this.props.goal) * 100).toFixed(0)}% of goal</Text>
+            </View>
+          </ProgressCircle>
         </View>
-        <View style={{ height: 200, padding: 20, flexDirection: 'row' }}>
+
+        <View style={styles.textContainer}>
+          <Text style={{fontSize: 20}}>Your daily goal:</Text>
+          <Text style={{fontSize: 15}}>{this.props.goal} steps</Text>
+        </View>
+
+        <View style={styles.barChartContainer}>
           <YAxis
             data={this.props.statsData}
             style={{ marginBottom: xAxisHeight }}
@@ -58,7 +62,6 @@ export default class DayStepProgress extends React.PureComponent {
               spacing={0.2}
               gridMin={0}
             >
-              <Grid direction={Grid.Direction.HORIZONTAL}/>
               <Labels/>
             </BarChart>
             <XAxis
@@ -77,15 +80,20 @@ export default class DayStepProgress extends React.PureComponent {
 
 
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
     flex: 1
   },
-  circle: {
-    height: 200,
-    marginTop: 20
+  circleContainer: {
+    flex: 5
   },
   textContainer: {
+    flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
+  },
+  barChartContainer: {
+    flex: 5,
+    flexDirection: 'row',
+    margin: 15
   }
 });
