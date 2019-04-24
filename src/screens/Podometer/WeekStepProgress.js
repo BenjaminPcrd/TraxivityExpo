@@ -18,7 +18,7 @@ export default class WeekStepProgress extends React.PureComponent {
       data.map((value, index) => (
         <Text
           key={ index }
-          x={ value >= CUT_OFF ? x(value) - 50 : x(value) + 5 }
+          x={ value >= CUT_OFF ? x(value) - 40 : x(value) + 5 }
           y={ y(index) + (bandwidth / 2) }
           fontSize={ 10 }
           fill={ value >= CUT_OFF ? 'white' : 'grey' }

@@ -99,7 +99,6 @@ class DayPodometer extends React.Component {
     return (
       <View style={{flex: 1}}>
         <DayStepProgress progress={this.state.pastStepCount} goal={this.props.goal} statsData={this.state.statsData} />
-
       </View>
     );
   }

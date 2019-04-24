@@ -5,7 +5,6 @@ import { ProgressCircle, Grid, LineChart, BarChart, XAxis, YAxis } from 'react-n
 
 export default class DayStepProgress extends React.PureComponent {
   render() {
-    console.log(this.props)
     const axesSvg = { fontSize: 10, fill: 'grey' };
     const verticalContentInset = { top: 10, bottom: 10 }
     const xAxisHeight = 30
@@ -67,8 +66,8 @@ export default class DayStepProgress extends React.PureComponent {
             <XAxis
               style={{ marginHorizontal: -10, height: xAxisHeight }}
               data={this.props.statsData}
-              formatLabel={(value, index) => index}
-              contentInset={{ left: 10, right: 10 }}
+              formatLabel={(value, index) => index == 0 || index == 4 || index == 8 || index == 12 || index == 16 || index == 20 ? index : ""}
+              contentInset={{ left: 23, right: 15 }}
               svg={axesSvg}
             />
           </View>

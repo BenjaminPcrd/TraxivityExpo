@@ -43,9 +43,12 @@ export default class DayPodometer extends React.Component {
     var end = new Date()
     start.setHours(0 - UTC_OFFSET)
     start.setMinutes(0)
+    start.setSeconds(0)
+    start.setMilliseconds(0)
     end.setHours(23 - UTC_OFFSET)
     end.setMinutes(59)
-
+    end.setSeconds(59)
+    end.setMilliseconds(999)
     for(i = 0; i < nbDays; i++) {
       await this._getStepCount(start, end)
       start.setDate(start.getDate() - 1)
