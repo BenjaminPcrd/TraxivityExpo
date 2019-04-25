@@ -30,9 +30,7 @@ export default class NewGoal extends Component {
              <Title>Set a new goal</Title>
           </Body>
         </Header>
-        <Content>
-          <SetNewGoal />
-        </Content>
+        <SetNewGoal />
       </Container>
     );
   }
@@ -40,6 +38,7 @@ export default class NewGoal extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     marginTop: StatusBar.currentHeight
   }
 });

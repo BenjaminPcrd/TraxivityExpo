@@ -30,9 +30,7 @@ export default class Settings extends Component {
              <Title>Settings</Title>
           </Body>
         </Header>
-        <Content>
-          <DayStartStop />
-        </Content>
+        <DayStartStop />
       </Container>
     );
   }
@@ -40,6 +38,7 @@ export default class Settings extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     marginTop: StatusBar.currentHeight
   }
 });
