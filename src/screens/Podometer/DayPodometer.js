@@ -36,7 +36,7 @@ class DayPodometer extends React.Component {
     end.setHours(23 - UTC_OFFSET)
     end.setMinutes(59)
     end.setSeconds(59)
-    end.setMilliseconds(0)
+    end.setMilliseconds(999)
     await Pedometer.getStepCountAsync(start, end).then(
       result => {
         this.setState({ pastStepCount: result.steps });
@@ -52,15 +52,16 @@ class DayPodometer extends React.Component {
     var start = new Date()
     var end = new Date()
     const UTC_OFFSET = start.getTimezoneOffset()/60
+    start.setHours(0 - UTC_OFFSET)
     start.setMinutes(0)
     start.setSeconds(0)
     start.setMilliseconds(0)
-    end.setMinutes(0)
-    end.setSeconds(0)
-    end.setMilliseconds(0)
-    for(i = 0; i <= 22; i++) {
-      start.setHours(i - UTC_OFFSET)
-      end.setHours(i+1 - UTC_OFFSET)
+    end.setHours(0 - UTC_OFFSET)
+    end.setMinutes(59)
+    end.setSeconds(59)
+    end.setMilliseconds(999)
+
+    for(i = 1; i <= 24; i++) {
       await Pedometer.getStepCountAsync(start, end).then(
         result => {
           data.push(result.steps)
@@ -69,19 +70,9 @@ class DayPodometer extends React.Component {
           data.push("Could not get stepCount: " + error );
         }
       );
+      start.setHours(i - UTC_OFFSET)
+      end.setHours(i - UTC_OFFSET)
     }
-    start.setHours(23 - UTC_OFFSET)
-    end.setMinutes(59)
-    end.setSeconds(59)
-    end.setMilliseconds(999)
-    await Pedometer.getStepCountAsync(start, end).then(
-      result => {
-        data.push(result.steps)
-      },
-      error => {
-        data.push("Could not get stepCount: " + error );
-      }
-    );
     this.setState({ statsData: data, loading: false });
   }
 
