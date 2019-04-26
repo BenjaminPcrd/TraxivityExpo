@@ -18,6 +18,7 @@ class SetNewGoal extends Component {
   _confirmButton() {
     const action = { type: "SET_NEW_GOAL", value: this._value }
     this.props.dispatch(action)
+    this.props.navigation.navigate('Podometer')
   }
 
   render () {

@@ -48,7 +48,7 @@ class DayStartStop extends Component {
             onConfirm={this._handlePickedStart}
             onCancel={this._hideTimePickerStart}
             mode='time'
-            is24Hour={false}
+            is24Hour={true}
             date={new Date('December 17, 1995 ' + this.props.startDayTime + ':00:00')}
           />
 
@@ -61,7 +61,7 @@ class DayStartStop extends Component {
             onConfirm={this._handlePickedEnd}
             onCancel={this._hideTimePickerEnd}
             mode='time'
-            is24Hour={false}
+            is24Hour={true}
             date={new Date('December 17, 1995 ' + this.props.endDayTime + ':00:00')}
           />
         </View>

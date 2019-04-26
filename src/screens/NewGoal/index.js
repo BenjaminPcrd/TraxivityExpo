@@ -15,6 +15,7 @@ import SetNewGoal from './SetNewGoal'
 
 export default class NewGoal extends Component {
   render() {
+    console.log(this.props)
     return (
       <Container style={styles.container}>
         <Header>
@@ -30,7 +31,7 @@ export default class NewGoal extends Component {
              <Title>Set a new goal</Title>
           </Body>
         </Header>
-        <SetNewGoal />
+        <SetNewGoal navigation={this.props.navigation}/>
       </Container>
     );
   }
